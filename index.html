@@ -1,1 +1,58 @@
-Hello World!
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Widget</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+      .widget {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px #ccc;
+      }
+      .widget h1 {
+        margin-top: 0;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+      }
+      .widget p {
+        font-size: 18px;
+        color: #666;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="widget">
+      <h1>Weather for 43040</h1>
+      <p id="weather"></p>
+    </div>
+    <script>
+      const apiKey = '601f1e98b1caeeed1640c1ae959ee9e6';
+      const zipCode = '43040';
+      const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${apiKey}&units=imperial`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const weather = data.weather[0].main;
+          const temp = Math.round(data.main.temp);
+          document.getElementById('weather').innerHTML = `${weather}, ${temp}°F`;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('weather').innerHTML = 'Error getting weather';
+        });
+    </script>
+  </body>
+</html>
